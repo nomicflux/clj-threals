@@ -12,6 +12,9 @@
 (s/defschema Colour
   (s/enum colours))
 
+(s/defschema NatInt
+  (s/constrained s/Int #(>= % 0)))
+
 (s/defn other-colours
   [colour :- Colour]
   (remove #(= % colour) colours))
@@ -26,35 +29,98 @@
    :green #{}
    :blue #{}})
 
+(s/defn n-red
+  [n :- NatInt]
+  (case n
+    0 zero
+    1 red
+    {:red #{(n-red (dec n))}
+     :green #{}
+     :blue #{}}))
+
 (s/def green
   {:red #{}
    :green #{zero}
    :blue #{}})
+
+(s/defn n-green
+  [n :- NatInt]
+  (case n
+    0 zero
+    1 green
+    {:red #{}
+     :green #{(n-green (dec n))}
+     :blue #{}}))
 
 (s/def blue
   {:red #{}
    :green #{}
    :blue #{zero}})
 
+(s/defn n-blue
+  [n :- NatInt]
+  (case n
+    0 zero
+    1 blue
+    {:red #{}
+     :green #{}
+     :blue #{(n-blue (dec n))}}))
+
 (s/def cyan
   {:red #{}
    :green #{zero}
    :blue #{zero}})
+
+(s/defn n-cyan
+  [n :- NatInt]
+  (case n
+    0 zero
+    1 cyan
+    {:red #{}
+     :green #{(n-cyan (dec n))}
+     :blue #{(n-cyan (dec n))}}))
 
 (s/def magenta
   {:red #{zero}
    :green #{}
    :blue #{zero}})
 
+(s/defn n-magenta
+  [n :- NatInt]
+  (case n
+    0 zero
+    1 magenta
+    {:red #{(n-magenta (dec n))}
+     :green #{}
+     :blue #{(n-magenta (dec n))}}))
+
 (s/def yellow
   {:red #{zero}
    :green #{zero}
    :blue #{}})
 
+(s/defn n-yellow
+  [n :- NatInt]
+  (case n
+    0 zero
+    1 yellow
+    {:red #{(n-yellow (dec n))}
+     :green #{(n-yellow (dec n))}
+     :blue #{}}))
+
 (s/def star
   {:red #{zero}
    :green #{zero}
    :blue #{zero}})
+
+(s/defn n-star
+  [n :- NatInt]
+  (case n
+    0 zero
+    1 star
+    {:red #{(n-star (dec n))}
+     :green #{(n-star (dec n))}
+     :blue #{(n-star (dec n))}}))
 
 (s/def anti-red
   {:red #{}

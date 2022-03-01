@@ -7,11 +7,15 @@
   [{x-reds :red x-greens :green x-blues :blue :as x} :- threals/Threal
    {y-reds :red y-greens :green y-blues :blue :as y} :- threals/Threal]
   {:red (into #{} (concat (map #(++ % y) x-reds)
-                 (map #(++ x %) y-reds)))
+                          (map #(++ x %) y-reds)))
    :green (into #{} (concat (map #(++ % y) x-greens)
                             (map #(++ x %) y-greens)))
    :blue (into #{} (concat (map #(++ % y) x-blues)
                            (map #(++ x %) y-blues)))})
+
+(s/defn sum :- threals/Threal
+  [& threals]
+  (reduce ++ threals/zero threals))
 
 (s/defn blueshift :- threals/Threal
   [{:keys [red green blue]} :- threals/Threal]
@@ -42,7 +46,22 @@
   [colour :- threals/Colour
    x :- threals/Threal
    y :- threals/Threal]
-(let [[c1 c2] (threals/other-colours colour)]
-  (and (empty? (filter (fn [x_] (gt_a colour y x_)) (get x c1)))
+  (let [[c1 c2] (threals/other-colours colour)]
+    (and (empty? (filter (fn [x_] (gt_a colour y x_)) (get x c1)))
          (empty? (filter (fn [x_] (gt_a colour y x_)) (get x c2)))
          (empty? (filter (fn [y_] (gt_a colour y_ x)) (get y colour))))))
+
+(s/defn remove-dominated :- #{threals/Threal}
+  [colour :- threals/Colour
+   gt_fn
+   threals :- #{threals/Threal}]
+  (loop [curr (first threals)
+         to-check (rest threals)
+         to-keep #{}]
+    (if (nil? curr)
+      to-keep
+      (let [greater-than (filter (fn [y] (gt_fn colour y curr)) to-check)
+            not-less-than (remove (fn [y] (gt_fn colour curr y)) to-check)]
+        (if (empty? greater-than)
+          (recur (first not-less-than) (rest not-less-than) (conj to-keep curr))
+          (recur (first not-less-than) (rest not-less-than) to-keep))))))
