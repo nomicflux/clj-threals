@@ -34,22 +34,15 @@
    x :- threals/Threal
    y :- threals/Threal]
   (let [[c1 c2] (threals/other-colours colour)]
-    (and (empty? (filter (fn [x_] (gt_a colour y x_)) (get x colour)))
-         (empty? (filter (fn [y_] (gt_a c1 x y_)) (get y c1)))
-         (empty? (filter (fn [y_] (gt_a c2 x y_)) (get y c2))))))
+    (and (empty? (filter (fn [x_] (gt_a c1 x_ y)) (get x c1)))
+         (empty? (filter (fn [x_] (gt_a c2 x_ y)) (get x c2)))
+         (empty? (filter (fn [y_] (gt_a colour y_ x)) (get y colour))))))
 
 (s/defn gt_b :- s/Bool
   [colour :- threals/Colour
    x :- threals/Threal
    y :- threals/Threal]
-  (and (empty? (filter (fn [x_] (gt_b colour y x_)) (get x colour)))
-       (empty? (filter (fn [y_] (gt_b colour y_ x)) (get y colour)))))
-
-(s/defn gt_c :- s/Bool
-  [colour :- threals/Colour
-   x :- threals/Threal
-   y :- threals/Threal]
 (let [[c1 c2] (threals/other-colours colour)]
-    (and (empty? (filter (fn [x_] (gt_c colour y x_)) (get x colour)))
-         (empty? (filter (fn [y_] (gt_c colour y_ x)) (get y c1)))
-         (empty? (filter (fn [y_] (gt_c colour y_ x)) (get y c2))))))
+  (and (empty? (filter (fn [x_] (gt_a colour y x_)) (get x c1)))
+         (empty? (filter (fn [x_] (gt_a colour y x_)) (get x c2)))
+         (empty? (filter (fn [y_] (gt_a colour y_ x)) (get y colour))))))
