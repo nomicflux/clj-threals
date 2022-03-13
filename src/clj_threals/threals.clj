@@ -1,11 +1,12 @@
 (ns clj-threals.threals
   (:require
-   [schema.core :as s]))
+   [schema.core :as s]
+   [clojure.set :as set]))
 
 (s/defschema Threal
-  {:red #{Threal}
-   :green #{Threal}
-   :blue #{Threal}})
+  [#{Threal}
+   #{Threal}
+   #{Threal}])
 
 (s/def colours #{:red :green :blue})
 
@@ -20,189 +21,278 @@
   (remove #(= % colour) colours))
 
 (s/def zero
-  {:red #{}
-   :green #{}
-   :blue #{}})
+  [#{}
+   #{}
+   #{}])
 
 (s/def red
-  {:red #{zero}
-   :green #{}
-   :blue #{}})
+  [#{zero}
+   #{}
+   #{}])
 
 (s/defn n-red
   [n :- NatInt]
   (case n
     0 zero
     1 red
-    {:red #{(n-red (dec n))}
-     :green #{}
-     :blue #{}}))
+    [#{(n-red (dec n))}
+     #{}
+     #{}]))
 
 (s/def green
-  {:red #{}
-   :green #{zero}
-   :blue #{}})
+  [#{}
+   #{zero}
+   #{}])
 
 (s/defn n-green
   [n :- NatInt]
   (case n
     0 zero
     1 green
-    {:red #{}
-     :green #{(n-green (dec n))}
-     :blue #{}}))
+    [#{}
+     #{(n-green (dec n))}
+     #{}]))
 
 (s/def blue
-  {:red #{}
-   :green #{}
-   :blue #{zero}})
+  [#{}
+   #{}
+   #{zero}])
 
 (s/defn n-blue
   [n :- NatInt]
   (case n
     0 zero
     1 blue
-    {:red #{}
-     :green #{}
-     :blue #{(n-blue (dec n))}}))
+    [#{}
+     #{}
+     #{(n-blue (dec n))}]))
 
 (s/def cyan
-  {:red #{}
-   :green #{zero}
-   :blue #{zero}})
+  [#{}
+   #{zero}
+   #{zero}])
 
 (s/defn n-cyan
   [n :- NatInt]
   (case n
     0 zero
     1 cyan
-    {:red #{}
-     :green #{(n-cyan (dec n))}
-     :blue #{(n-cyan (dec n))}}))
+    [#{}
+     #{(n-cyan (dec n))}
+     #{(n-cyan (dec n))}]))
 
 (s/def magenta
-  {:red #{zero}
-   :green #{}
-   :blue #{zero}})
+  [#{zero}
+   #{}
+   #{zero}])
 
 (s/defn n-magenta
   [n :- NatInt]
   (case n
     0 zero
     1 magenta
-    {:red #{(n-magenta (dec n))}
-     :green #{}
-     :blue #{(n-magenta (dec n))}}))
+    [#{(n-magenta (dec n))}
+     #{}
+     #{(n-magenta (dec n))}]))
 
 (s/def yellow
-  {:red #{zero}
-   :green #{zero}
-   :blue #{}})
+  [#{zero}
+   #{zero}
+   #{}])
 
 (s/defn n-yellow
   [n :- NatInt]
   (case n
     0 zero
     1 yellow
-    {:red #{(n-yellow (dec n))}
-     :green #{(n-yellow (dec n))}
-     :blue #{}}))
+    [#{(n-yellow (dec n))}
+     #{(n-yellow (dec n))}
+     #{}]))
 
 (s/def star
-  {:red #{zero}
-   :green #{zero}
-   :blue #{zero}})
+  [#{zero}
+   #{zero}
+   #{zero}])
 
 (s/defn n-star
   [n :- NatInt]
   (case n
     0 zero
     1 star
-    {:red #{(n-star (dec n))}
-     :green #{(n-star (dec n))}
-     :blue #{(n-star (dec n))}}))
+    [#{(n-star (dec n))}
+     #{(n-star (dec n))}
+     #{(n-star (dec n))}]))
 
 (s/def anti-red
-  {:red #{}
-   :green #{blue}
-   :blue #{green}})
+  [#{}
+   #{blue}
+   #{green}])
 
 (s/def anti-green
-  {:red #{blue}
-   :green #{}
-   :blue #{red}})
+  [#{blue}
+   #{}
+   #{red}])
 
 (s/def anti-blue
-  {:red #{green}
-   :green #{red}
-   :blue #{}})
+  [#{green}
+   #{red}
+   #{}])
 
 (s/def all-star
-  {:red #{red}
-   :green #{green}
-   :blue #{blue}})
+  [#{red}
+   #{green}
+   #{blue}])
 
 (s/def anti-star
-  {:red #{anti-red}
-   :green #{anti-green}
-   :blue #{anti-blue}})
+  [#{anti-red}
+   #{anti-green}
+   #{anti-blue}])
 
 (s/def half-red-blue
-  {:red #{zero}
-   :green #{}
-   :blue #{red}})
+  [#{zero}
+   #{}
+   #{red}])
 
 (s/def half-red-green
-  {:red #{zero}
-   :green #{red}
-   :blue #{}})
+  [#{zero}
+   #{red}
+   #{}])
 
 (s/def half-green-blue
-  {:red #{}
-   :green #{zero}
-   :blue #{green}})
+  [#{}
+   #{zero}
+   #{green}])
 
 (s/def half-green-red
-  {:red #{green}
-   :green #{zero}
-   :blue #{}})
+  [#{green}
+   #{zero}
+   #{}])
 
 (s/def half-blue-red
-  {:red #{blue}
-   :green #{}
-   :blue #{zero}})
+  [#{blue}
+   #{}
+   #{zero}])
 
 (s/def half-blue-green
-  {:red #{}
-   :green #{green}
-   :blue #{zero}})
+  [#{}
+   #{green}
+   #{zero}])
 
 (s/def red-green-blue-tree
-  {:red #{zero}
-   :green #{red}
-   :blue #{half-red-green}})
+  [#{zero}
+   #{red}
+   #{half-red-green}])
 
 (s/def red-blue-green-tree
-  {:red #{zero}
-   :green #{half-red-blue}
-   :blue #{red}})
+  [#{zero}
+   #{half-red-blue}
+   #{red}])
 
 (s/def green-blue-red-tree
-  {:red #{half-green-blue}
-   :green #{zero}
-   :blue #{green}})
+  [#{half-green-blue}
+   #{zero}
+   #{green}])
 
 (s/def green-red-blue-tree
-  {:red #{green}
-   :green #{zero}
-   :blue #{half-green-red}})
+  [#{green}
+   #{zero}
+   #{half-green-red}])
 
 (s/def blue-red-green-tree
-  {:red #{blue}
-   :green #{half-blue-red}
-   :blue #{zero}})
+  [#{blue}
+   #{half-blue-red}
+   #{zero}])
 
 (s/def blue-green-red-tree
-  {:red #{half-blue-green}
-   :green #{blue}
-   :blue #{zero}})
+  [#{half-blue-green}
+   #{blue}
+   #{zero}])
+
+(s/defn all-t
+  [threal :- Threal]
+  [(into #{} [threal])
+   (into #{} [threal])
+   (into #{} [threal])])
+
+(s/def red-arrow
+  [#{star}
+   #{zero}
+   #{zero}])
+
+(s/def green-arrow
+  [#{zero}
+   #{star}
+   #{zero}])
+
+(s/def blue-arrow
+  [#{zero}
+   #{zero}
+   #{star}])
+
+(s/def yellow-arrow
+  [#{star}
+   #{star}
+   #{zero}])
+
+(s/def cyan-arrow
+  [#{zero}
+   #{star}
+   #{star}])
+
+(s/def magenta-arrow
+  [#{star}
+   #{zero}
+   #{star}])
+
+(s/def half-yellow
+  [#{zero}
+   #{zero}
+   #{yellow}])
+
+(s/def half-magenta
+  [#{zero}
+   #{magenta}
+   #{zero}])
+
+(s/def half-cyan
+  [#{cyan}
+   #{zero}
+   #{zero}])
+
+(s/def half-red-cyan
+  [#{zero}
+   #{red}
+   #{red}])
+
+(s/def half-green-magenta
+  [#{green}
+   #{zero}
+   #{green}])
+
+(s/def half-blue-yellow
+  [#{blue}
+   #{blue}
+   #{zero}])
+
+(s/def anti-magenta
+  [#{cyan}
+   #{cyan yellow}
+   #{yellow}])
+
+(s/def anti-yellow
+  [#{cyan}
+   #{magenta}
+   #{cyan magenta}])
+
+(s/def anti-cyan
+  [#{yellow magenta}
+   #{magenta}
+   #{yellow}])
+
+(s/def black
+  [#{anti-magenta
+     anti-yellow}
+   #{anti-cyan
+     anti-yellow}
+   #{anti-magenta
+     anti-cyan}])
