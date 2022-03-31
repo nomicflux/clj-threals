@@ -93,7 +93,11 @@ following commands have come up often in research:
 
 ;; Add threals together with caching / simplification and display the result
 (++% yellow star)
-;; #b*
+;; #b* 
+;;;; A representation of the `yellow` ( 0 / 0 \ ) move for all three players
+;;;; #b (coloured yellow) as it is in a sense an anti-blue (red and green can move to zero, blue has no moves), but not
+;;;;    a strict negation
+;;;; * to represent that the same move is repeated for all players
 
 ;; Show the "characteristic" between two threals (their comparison along all three primary and all three secondary axes
 (% white black)
