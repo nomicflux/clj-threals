@@ -68,8 +68,8 @@
                   z (first zs)
                   {sxy-z :result
                    cache :cache} (let [{:keys [result cache]}
-                                        (add-with-cache gt_s x y cache)]
-                                    (add-with-cache gt_s result z cache))
+                                       (add-with-cache gt_s x y cache)]
+                                   (add-with-cache gt_s result z cache))
                   {sx-yz :result
                    cache :cache} (let [{:keys [result cache]}
                                        (add-with-cache gt_s y z cache)]

@@ -40,7 +40,7 @@ following commands have come up often in research:
 ```clojure
 ;; A (more) user-friendly way of viewing threals
 (display [#{red} #{red green} #{blue}])
-;; => ( r / r g \ b )
+;; ( r / r g \ b )
 
 ;; Add threals together without any simplification
 (++ red blue)

@@ -154,16 +154,16 @@
    colour :- threals/Colour
    threals :- #{threals/Threal}]
   (let [d? (memoize (partial dominates? gt_fn colour))]
-      (loop [curr (first threals)
-             to-check (rest threals)
-             to-keep #{}]
-        (if (nil? curr)
-          to-keep
-          (let [greater-than (filter #(d? % curr) to-check)
-                not-less-than (remove #(d? curr %) to-check)]
-            (if (empty? greater-than)
-              (recur (first not-less-than) (rest not-less-than) (conj to-keep curr))
-              (recur (first not-less-than) (rest not-less-than) to-keep)))))))
+    (loop [curr (first threals)
+           to-check (rest threals)
+           to-keep #{}]
+      (if (nil? curr)
+        to-keep
+        (let [greater-than (filter #(d? % curr) to-check)
+              not-less-than (remove #(d? curr %) to-check)]
+          (if (empty? greater-than)
+            (recur (first not-less-than) (rest not-less-than) (conj to-keep curr))
+            (recur (first not-less-than) (rest not-less-than) to-keep)))))))
 
 (s/defn simplify :- #{threals/Threal}
   [gt_fn
@@ -386,11 +386,11 @@
                               (visitor_fn day new)))
                           (recur (rest r-list) g-list b-list
                                  (set/union seen (into #{} [[r g b]
-                                                   [g b r]
-                                                   [b r g]
-                                                   [r b g]
-                                                   [b g r]
-                                                   [g r b]]))
+                                                            [g b r]
+                                                            [b r g]
+                                                            [r b g]
+                                                            [b g r]
+                                                            [g r b]]))
                                  (set/union acc new)))))))
           with-today (assoc acc day today)]
       (if (= day n)
@@ -403,8 +403,8 @@
   ([n k]
    (let [gt (memoize gt_d)]
      (k (for-birthday gt
-                    (fn [day ts] (println day ": ") (doseq [t ts] (display/display t)))
-                    n)))
+                      (fn [day ts] (println day ": ") (doseq [t ts] (display/display t)))
+                      n)))
    nil))
 
 (defn show-and-save-bd
