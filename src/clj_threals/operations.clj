@@ -315,28 +315,38 @@
      (doseq [[axis-a axis-b] axes]
        (println axis-a "-" axis-b ":" (to-category axis-a axis-b chars))))))
 
-(s/def gt-r-g (memoize (partial generic-gt #{:red} #{:green})))
-(s/def gt-g-b (memoize (partial generic-gt #{:green} #{:blue})))
-(s/def gt-b-r (memoize (partial generic-gt #{:blue} #{:red})))
+(s/def gt-r-g (partial generic-gt #{:red} #{:green}))
+(s/def gt-g-b (partial generic-gt #{:green} #{:blue}))
+(s/def gt-b-r (partial generic-gt #{:blue} #{:red}))
 (s/defn gt_d :- s/Bool
   [colour :- threals/Colour
    x :- threals/Threal
    y :- threals/Threal]
   (case colour
-    :green (and (gt-g-b x y) (gt-r-g y x))
     :red (and (gt-r-g x y) (gt-b-r y x))
+    :green (and (gt-g-b x y) (gt-r-g y x))
     :blue (and (gt-b-r x y) (gt-g-b y x))))
 
-(s/def gt-cyan (memoize (partial generic-gt #{:green :blue} #{:red})))
-(s/def gt-magenta (memoize (partial generic-gt #{:blue :red} #{:green})))
-(s/def gt-yellow (memoize (partial generic-gt #{:red :green} #{:blue})))
+(s/def gt-cyan (partial generic-gt #{:green :blue} #{:red}))
+(s/def gt-magenta (partial generic-gt #{:blue :red} #{:green}))
+(s/def gt-yellow (partial generic-gt #{:red :green} #{:blue}))
 (s/defn gt_e :- s/Bool
-  [_colour :- threals/Colour
+  [colour :- threals/Colour
    x :- threals/Threal
    y :- threals/Threal]
-  (and (gt-yellow x y)
-       (gt-magenta x y)
-       (gt-cyan x y)))
+  (case colour
+    :red (and (gt-yellow x y) (gt-magenta x y) (gt-cyan y x))
+    :green (and (gt-cyan x y) (gt-yellow x y) (gt-magenta y x))
+    :blue (and (gt-magenta x y) (gt-cyan x y) (gt-yellow y x))))
+
+(s/defn gt_f :- s/Bool
+  [colour :- threals/Colour
+   x :- threals/Threal
+   y :- threals/Threal]
+  (case colour
+    :red (and (gt-r-g x y) (not (gt-b-r x y)))
+    :green (and (gt-g-b x y) (not (gt-r-g x y)))
+    :blue (and (gt-b-r x y) (not (gt-g-b x y)))))
 
 (s/defn for-birthday
   [gt_fn
@@ -381,14 +391,24 @@
                                                    [r b g]
                                                    [b g r]
                                                    [g r b]]))
-                                 (set/union acc new)))))))]
+                                 (set/union acc new)))))))
+          with-today (assoc acc day today)]
       (if (= day n)
-        acc
-        (recur today (inc day) new-seen (assoc acc day today))))))
+        with-today
+        (recur today (inc day) new-seen with-today)))))
 
-(defn show-bd [n]
-  (let [gt (memoize gt_d)]
-    (for-birthday gt
-                  (fn [day ts] (println day ": ") (doseq [t ts] (display/display t)))
-                  n))
-  nil)
+(defn show-bd
+  ([n]
+   (show-bd n (constantly nil)))
+  ([n k]
+   (let [gt (memoize gt_d)]
+     (k (for-birthday gt
+                    (fn [day ts] (println day ": ") (doseq [t ts] (display/display t)))
+                    n)))
+   nil))
+
+(defn show-and-save-bd
+  [n]
+  (let [saved (atom nil)]
+    (show-bd n (fn [res] (swap! saved (constantly res))))
+    saved))

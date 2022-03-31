@@ -143,7 +143,7 @@
    #{green}
    #{blue}])
 
-(s/def anti-star
+(s/def white
   [#{anti-red}
    #{anti-green}
    #{anti-blue}])
@@ -296,3 +296,41 @@
      anti-yellow}
    #{anti-magenta
      anti-cyan}])
+
+(s/def red-stalemate
+  [#{cyan}
+   #{red}
+   #{red}])
+
+(s/def green-stalemate
+  [#{green}
+   #{magenta}
+   #{green}])
+
+(s/def blue-stalemate
+  [#{blue}
+   #{blue}
+   #{yellow}])
+
+(s/def hot-yellow
+  [#{yellow}
+   #{yellow}
+   #{blue}])
+
+(s/def hot-magenta
+  [#{magenta}
+   #{green}
+   #{magenta}])
+
+(s/def hot-cyan
+  [#{red}
+   #{cyan}
+   #{cyan}])
+
+(s/defn timber-n
+  [n :- s/Int]
+  (case n
+    0 zero
+    1 star
+    (let [timbers (into #{} (map timber-n (range 0 n)))]
+      [timbers timbers timbers])))

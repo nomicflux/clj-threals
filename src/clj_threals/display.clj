@@ -60,7 +60,7 @@
    threals/anti-green ["-g-" :magenta]
    threals/anti-blue ["-b-" :yellow]
    threals/all-star ["$" :white]
-   threals/anti-star ["@" :white]
+   threals/white ["@" :white]
    threals/half-red-green ["r/g" :red]
    threals/half-red-blue ["r/b" :red]
    threals/half-green-blue ["g/b" :green]
@@ -82,7 +82,15 @@
    threals/anti-yellow ["-rg-" :blue]
    threals/anti-magenta ["-br-" :green]
    threals/anti-cyan ["-gb-" :red]
-   threals/black ["-rgb-" :black]})
+   threals/black ["-rgb-" :black]
+   threals/red-stalemate ["!r!" :bg-red]
+   threals/green-stalemate ["!g!" :bg-green]
+   threals/blue-stalemate ["!b!" :bg-blue]
+   threals/hot-yellow ["rg-b" :yellow]
+   threals/hot-magenta ["br-g" :magenta]
+   threals/hot-cyan ["gb-r" :cyan]
+   (threals/timber-n 2) ["*2" :white]
+   (threals/timber-n 3) ["*3" :white]})
 
 (s/defn display* :- s/Str
   ([x]
@@ -92,18 +100,20 @@
    (str
         (if-let [[s colour] (get colour-map x)]
           (colourize s colour)
-          (str "\n"
-               (str/join (repeat level "\t"))
-               " ( "
-               (str/join " " (map (partial display* (inc level)) reds))
-               " / "
-               (str/join " " (map (partial display* (inc level)) greens))
-               " \\ "
-               (str/join " " (map (partial display* (inc level)) blues))
-               " )"
-               "\n"
-               (str/join (repeat (dec level) "\t"))
-               ))
+          (if (= reds greens blues)
+            (str " { " (str/join " " (map (partial display* level) reds)) " }")
+            (str "\n"
+                (str/join (repeat level "\t"))
+                " ( "
+                (str/join " " (map (partial display* (inc level)) reds))
+                " / "
+                (str/join " " (map (partial display* (inc level)) greens))
+                " \\ "
+                (str/join " " (map (partial display* (inc level)) blues))
+                " )"
+                "\n"
+                (str/join (repeat (dec level) "\t"))
+                )))
         )))
 
 (s/defn display :- (s/eq nil)

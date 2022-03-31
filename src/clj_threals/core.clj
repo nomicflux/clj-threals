@@ -7,6 +7,8 @@
    [clojure.set :as set]))
 
 (def gt (memoize gt_d))
+(def gt2 (memoize gt_e))
+(def gt3 (memoize gt_f))
 
 (def small-list [zero red green blue yellow cyan magenta star])
 (def threal-list (keys colour-map))
@@ -28,11 +30,12 @@
          cache= {}
          cache_s {}
          mismatches []
-         noncommutative []]
+         noncommutative []
+         non-identical []]
     (if (empty? ys)
-      [mismatches noncommutative]
+      [mismatches noncommutative non-identical]
       (if (empty? xs)
-        (recur (rest ys) (rest ys) cache= cache_s mismatches noncommutative)
+        (recur (rest ys) (rest ys) cache= cache_s mismatches noncommutative non-identical)
         (let [x (first xs)
               y (first ys)
               {xy :result cache= :cache} (sum-with-cache = cache= x y)
@@ -43,8 +46,11 @@
                                (conj [x y]))
               new-noncommutative (cond-> noncommutative
                                    (not (eq gt_eq sxy syx))
-                                   (conj [x y]))]
-          (recur (rest xs) ys cache= cache_s new-mismatches new-noncommutative))))))
+                                   (conj [x y]))
+              new-non-identical (cond-> non-identical
+                                  (not (= xy sxy))
+                                  (conj [x y]))]
+          (recur (rest xs) ys cache= cache_s new-mismatches new-noncommutative new-non-identical))))))
 
 (defn find-3-eq-mismatches
   [gt_s gt_eq eq list]
@@ -80,8 +86,8 @@
      :or {list threal-list
           gt_fn gt
           eq rotate-eq?}}]
-   (let [[m n] (find-eq-mismatches gt_fn gt_fn eq list)]
-     (println (count m) (count n)))))
+   (let [[m n o] (find-eq-mismatches gt_fn gt_fn eq list)]
+     (println (count m) (count n) (count o)))))
 
 (defn run-3-eq-mismatches
   ([]
@@ -122,10 +128,11 @@
     (if (empty? xs)
       [neg-mismatches cache]
       (let [x (first xs)
-            {z :result cache :cache} (sum-with-cache gt_s cache x (greenshift x) (blueshift x))
+            {neg :result cache :cache} (sum-with-cache gt_s cache (greenshift x) (blueshift x))
+            {z :result cache :cache} (sum-with-cache gt_s cache x neg)
             new-neg-mismatches (cond-> neg-mismatches
                                  (not (eq gt_eq z zero))
-                                 (conj [x z]))]
+                                 (conj [x neg z]))]
         (recur (rest xs) new-neg-mismatches cache)))))
 
 (defn run-negation-mismatches
@@ -140,8 +147,9 @@
      (println (count m))
      (println "Cache size: " (count cache))
      (when (< (count m) 15)
-       (doseq [[x z] m]
+       (doseq [[x neg z] m]
          (display x)
+         (display neg)
          (display z)
          (println "---"))))))
 
@@ -169,7 +177,11 @@
 
 (defn +++
   [& args]
-  (display (:result (apply sum-with-cache gt {} args))))
+  (:result (apply sum-with-cache gt {} args)))
+
+(defn ++%
+  [& args]
+  (display (apply +++ args)))
 
 (defn %
   [x y]
