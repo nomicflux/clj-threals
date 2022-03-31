@@ -100,6 +100,24 @@ following commands have come up often in research:
 ;;;; * to represent that the same move is repeated for all players
 
 ;; Show the "characteristic" between two threals (their comparison along all three primary and all three secondary axes
+(% white zero)
+;; #{:red} - #{:green} : ==
+;; #{:green} - #{:blue} : ==
+;; #{:blue} - #{:red} : ==
+;; #{:green :red} - #{:blue} : <-
+;; #{:green :blue} - #{:red} : <-
+;; #{:red :blue} - #{:green} : <-
+;;;; Example of two values which are equal along the primary axes, but not the secondary
+
+(% black star)
+;; #{:red} - #{:green} : ==
+;; #{:green} - #{:blue} : ==
+;; #{:blue} - #{:red} : ==
+;; #{:green :red} - #{:blue} : <-
+;; #{:green :blue} - #{:red} : <-
+;; #{:red :blue} - #{:green} : <-
+;;;; Another example of two values which are equal along the primary axes, but not the secondary
+
 (% white black)
 ;; #{:red} - #{:green} : ||
 ;; #{:green} - #{:blue} : ||
@@ -107,6 +125,7 @@ following commands have come up often in research:
 ;; #{:green :red} - #{:blue} : ==
 ;; #{:green :blue} - #{:red} : ==
 ;; #{:red :blue} - #{:green} : ==
+;;;; The inverse is also possible, where values are equal along the secondary axes, but not the primary
 ```
 
 ## License
