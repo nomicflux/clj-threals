@@ -78,13 +78,22 @@ following commands have come up often in research:
 ;; ( r / r g \ b )
 
 ;; Add threals together without any simplification
-(++ red blue)
+(++ yellow star)
+;; => [#{[#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{}]
+;;   [#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{[#{} #{} #{}]}]}
+;; #{[#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{}]
+;;   [#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{[#{} #{} #{}]}]}
+;; #{[#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{}]}]
 
 ;; Add threals together with caching and simplification
 (+++ yellow star)
+;; => [#{[#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{}]}
+;; #{[#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{}]}
+;; #{[#{[#{} #{} #{}]} #{[#{} #{} #{}]} #{}]}]
 
 ;; Add threals together with caching / simplification and display the result
-(++% red-green-blue-tree (timber-n 3))
+(++% yellow star)
+;; #b*
 
 ;; Show the "characteristic" between two threals (their comparison along all three primary and all three secondary axes
 (% white black)
