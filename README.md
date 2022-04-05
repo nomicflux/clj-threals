@@ -61,6 +61,29 @@ Given ordering, Red might want to force Green out this turn, even though it woul
 ordering, Blue has a move which can restore moves to Green, so Red would not have this option; there would be no sense
 of Green losing only because they go next.
 
+#### Possible Impact of Order of Play
+
+Edit: I have found a case where order of play appears to matter.
+
+To start, for a contrasting base case , `red` + `green` + `blue`, or `( 0 / \ ) + ( / 0 \ ) + ( / \ 0 )`, appears to be a third player win, or 0.
+If Red goes first (without loss of generality), then the situation will be `( / 0 \ ) + ( / \ 0)' as red has only one move. After Green, we have
+`( / \ 0 )`, and after Blue, nothing, If Red is followed by Blue instead of Green, the outcome is the same: both players
+have a move, and Red ends up with no moves (i.e. at `0`).
+
+But, if we have `( red / green \ )` + `( / green \ blue )` + `( red / \ blue )`, then we have two possible outcomes:
+1. a. Red reduces `( red / green \ )` -> `red`, leaving `red` + `( / green \ blue )` + `( red / \ blue )`
+   b. Green has only one choice, to reduce `( / green \ blue )` -> `blue`, leaving `red` + `green` + `( red / \ blue )`.
+   c. Blue similarly has only one choice, `( red / \ blue )` -> `red`, leaving `red` + `green` + `blue`.
+2. a. But, if Red reduces `( red / \ blue )` -> red, we have `( red / green \ )` + `( / green \ blue )` + `red`.
+   b. Green can either reduce `( red / green \ )` -> `green` or `( / green \ blue )` -> `green`. 
+      i. The first leaves `green` + ( / green \ blue )` + `red`. This becomes then `green` + `blue` after `red` after
+      Blue, another 0 game.
+      ii. The second leaves `( red / green \ )` + `blue` + `red`. Blue picks their option, leaving `( red / green \ )` +
+      `red`. Red can then win by picking the first option, leaving `red` + `red`.
+      iii. Generalizing, since the game is symmetrical, we can claim a first person win. *But*, the order of the second
+      player was important - nothing in the original game distinguished `green` or `blue`, but Red removing a Blue
+      option led to a Red win, while Red removing a Green option led to a Red loss and a Blue win.
+
 ## Usage
 
 Threals are represented as triples of sets:
