@@ -72,19 +72,19 @@ have a move, and Red ends up with no moves (i.e. at `0`).
 
 But, if we have `( red / green \ )` + `( / green \ blue )` + `( red / \ blue )`, then we have two possible outcomes:
 1. Outcome #1
-  1. Red reduces `( red / green \ )` -> `red`, leaving `red` + `( / green \ blue )` + `( red / \ blue )`
-  2. Green has only one choice, to reduce `( / green \ blue )` -> `blue`, leaving `red` + `green` + `( red / \ blue )`.
-  3. Blue similarly has only one choice, `( red / \ blue )` -> `red`, leaving `red` + `green` + `blue`.
+    1. Red reduces `( red / green \ )` -> `red`, leaving `red` + `( / green \ blue )` + `( red / \ blue )`
+    2. Green has only one choice, to reduce `( / green \ blue )` -> `blue`, leaving `red` + `green` + `( red / \ blue )`.
+    3. Blue similarly has only one choice, `( red / \ blue )` -> `red`, leaving `red` + `green` + `blue`.
 2. Outcome #2
-  1. But, if Red reduces `( red / \ blue )` -> `red`, we have `( red / green \ )` + `( / green \ blue )` + `red`.
-  2. Green can either reduce `( red / green \ )` -> `green` or `( / green \ blue )` -> `green`. 
-    1. The first leaves `green` + `( / green \ blue )` + `red`. This becomes then `green` + `blue` after `red` after
-       Blue plays, another 0 game.
-    2. The second leaves `( red / green \ )` + `blue` + `red`. Blue picks their option, leaving `( red / green \ )` +
-       `red`. Red can then win by picking the first option, leaving `red` + `red`.
-    3. Generalizing, since the game is symmetrical, we can claim a first person win. *But*, the order of the second
-       player was important - nothing in the original game distinguished `green` or `blue`, but Red removing a Blue
-       option led to a Red win, while Red removing a Green option led to a Red loss and a Blue win.
+    1. But, if Red reduces `( red / \ blue )` -> `red`, we have `( red / green \ )` + `( / green \ blue )` + `red`.
+    2. Green can either reduce `( red / green \ )` -> `green` or `( / green \ blue )` -> `green`. 
+        1. The first leaves `green` + `( / green \ blue )` + `red`. This becomes then `green` + `blue` after `red` after
+           Blue plays, another 0 game.
+        2. The second leaves `( red / green \ )` + `blue` + `red`. Blue picks their option, leaving `( red / green \ )` +
+           `red`. Red can then win by picking the first option, leaving `red` + `red`.
+        3. Generalizing, since the game is symmetrical, we can claim a first person win. *But*, the order of the second
+           player was important - nothing in the original game distinguished `green` or `blue`, but Red removing a Blue
+           option led to a Red win, while Red removing a Green option led to a Red loss and a Blue win.
 
 ## Usage
 
