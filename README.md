@@ -16,7 +16,7 @@ Players are referred to as red, green, and blue. Combinations of red & green vs 
 
 ### Partial Ordering Problems
 
-Partial ordering is the most important element, as equality and simplification rely on it. As of now, system which
+Partial ordering is the most important element, as equality and simplification rely on it. As of now, a system which
 empirically appears to be consistent (i.e. for which any game can be replaced with its simplification in a sum, and the
 result is equal to the original) can be built off of orderings which treat each game as three separate two player
 games - that is, there is a partial ordering along the red-green axis, the green-blue axis, and the blue-red axis.
@@ -40,7 +40,7 @@ favour of a different player than the one under analysis as a perfectly rational
 
 ### Three- (and N-)player Misère
 
-In addition, it is not clear what a three-player misère version would be - would two players be considering as winners
+In addition, it is not clear what a three-player misère version would be - would two players be considered as winners
 and only the player who took the last move as the loser? If so, than this would suggest an interesting interpretation of
 misère vs normal play - in normal play, one is a winner if all other players lose, and in misère play, one is
 a winner if there exists a losing player. Could this duality be utilised? Does it make sense to say that in a one-person
@@ -71,18 +71,20 @@ If Red goes first (without loss of generality), then the situation will be `( / 
 have a move, and Red ends up with no moves (i.e. at `0`).
 
 But, if we have `( red / green \ )` + `( / green \ blue )` + `( red / \ blue )`, then we have two possible outcomes:
-1. a. Red reduces `( red / green \ )` -> `red`, leaving `red` + `( / green \ blue )` + `( red / \ blue )`
-   b. Green has only one choice, to reduce `( / green \ blue )` -> `blue`, leaving `red` + `green` + `( red / \ blue )`.
-   c. Blue similarly has only one choice, `( red / \ blue )` -> `red`, leaving `red` + `green` + `blue`.
-2. a. But, if Red reduces `( red / \ blue )` -> red, we have `( red / green \ )` + `( / green \ blue )` + `red`.
-   b. Green can either reduce `( red / green \ )` -> `green` or `( / green \ blue )` -> `green`. 
-      i. The first leaves `green` + ( / green \ blue )` + `red`. This becomes then `green` + `blue` after `red` after
-      Blue, another 0 game.
-      ii. The second leaves `( red / green \ )` + `blue` + `red`. Blue picks their option, leaving `( red / green \ )` +
-      `red`. Red can then win by picking the first option, leaving `red` + `red`.
-      iii. Generalizing, since the game is symmetrical, we can claim a first person win. *But*, the order of the second
-      player was important - nothing in the original game distinguished `green` or `blue`, but Red removing a Blue
-      option led to a Red win, while Red removing a Green option led to a Red loss and a Blue win.
+1. Outcome #1
+  1. Red reduces `( red / green \ )` -> `red`, leaving `red` + `( / green \ blue )` + `( red / \ blue )`
+  2. Green has only one choice, to reduce `( / green \ blue )` -> `blue`, leaving `red` + `green` + `( red / \ blue )`.
+  3. Blue similarly has only one choice, `( red / \ blue )` -> `red`, leaving `red` + `green` + `blue`.
+2. Outcome #2
+  1. But, if Red reduces `( red / \ blue )` -> `red`, we have `( red / green \ )` + `( / green \ blue )` + `red`.
+  2. Green can either reduce `( red / green \ )` -> `green` or `( / green \ blue )` -> `green`. 
+    1. The first leaves `green` + `( / green \ blue )` + `red`. This becomes then `green` + `blue` after `red` after
+       Blue plays, another 0 game.
+    2. The second leaves `( red / green \ )` + `blue` + `red`. Blue picks their option, leaving `( red / green \ )` +
+       `red`. Red can then win by picking the first option, leaving `red` + `red`.
+    3. Generalizing, since the game is symmetrical, we can claim a first person win. *But*, the order of the second
+       player was important - nothing in the original game distinguished `green` or `blue`, but Red removing a Blue
+       option led to a Red win, while Red removing a Green option led to a Red loss and a Blue win.
 
 ## Usage
 
@@ -118,11 +120,12 @@ following commands have come up often in research:
 (++% yellow star)
 ;; #b* 
 ;;;; A representation of the `yellow` ( 0 / 0 \ ) move for all three players
-;;;; #b (coloured yellow) as it is in a sense an anti-blue (red and green can move to zero, blue has no moves), but not
-;;;;    a strict negation
+;;;; #b (coloured yellow) as it is in a sense an anti-blue (red and green can move to zero,
+;;;;    blue has no moves), but not a strict negation
 ;;;; * to represent that the same move is repeated for all players
 
-;; Show the "characteristic" between two threals (their comparison along all three primary and all three secondary axes
+;; Show the "characteristic" between two threals (their comparison along all three primary 
+;; and all three secondary axes 
 (% white zero)
 ;; #{:red} - #{:green} : ==
 ;; #{:green} - #{:blue} : ==
@@ -139,7 +142,8 @@ following commands have come up often in research:
 ;; #{:green :red} - #{:blue} : <-
 ;; #{:green :blue} - #{:red} : <-
 ;; #{:red :blue} - #{:green} : <-
-;;;; Another example of two values which are equal along the primary axes, but not the secondary
+;;;; Another example of two values which are equal along the primary axes, 
+;;;; but not the secondary
 
 (% white black)
 ;; #{:red} - #{:green} : ||
@@ -148,7 +152,8 @@ following commands have come up often in research:
 ;; #{:green :red} - #{:blue} : ==
 ;; #{:green :blue} - #{:red} : ==
 ;; #{:red :blue} - #{:green} : ==
-;;;; The inverse is also possible, where values are equal along the secondary axes, but not the primary
+;;;; The inverse is also possible, where values are equal along the secondary axes, 
+;;;; but not the primary
 ```
 
 ## License
