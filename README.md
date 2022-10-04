@@ -66,7 +66,7 @@ of Green losing only because they go next.
 Edit: I have found a case where order of play appears to matter.
 
 To start, for a contrasting base case , `red` + `green` + `blue`, or `( 0 / \ ) + ( / 0 \ ) + ( / \ 0 )`, appears to be a third player win, or 0.
-If Red goes first (without loss of generality), then the situation will be `( / 0 \ ) + ( / \ 0)' as red has only one move. After Green, we have
+If Red goes first (without loss of generality), then the situation will be `( / 0 \ ) + ( / \ 0)` as red has only one move. After Green, we have
 `( / \ 0 )`, and after Blue, nothing, If Red is followed by Blue instead of Green, the outcome is the same: both players
 have a move, and Red ends up with no moves (i.e. at `0`).
 
