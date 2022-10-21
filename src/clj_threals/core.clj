@@ -6,9 +6,11 @@
    [clj-threals.display :refer [display colour-map]]
    [clojure.set :as set]))
 
-(def gt (memoize gt_d))
+;;(def gt (memoize gt_d))
+(def gt (memoize gt_g))
 (def gt2 (memoize gt_e))
 (def gt3 (memoize gt_f))
+(def gt4 (memoize gt_h))
 
 (def small-list [zero red green blue yellow cyan magenta star])
 (def threal-list (keys colour-map))

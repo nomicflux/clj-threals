@@ -73,8 +73,8 @@ have a move, and Red ends up with no moves (i.e. at `0`).
 But, if we have `( red / green \ )` + `( / green \ blue )` + `( red / \ blue )`, then we have two possible outcomes:
 1. Outcome #1
     1. Red reduces `( red / green \ )` -> `red`, leaving `red` + `( / green \ blue )` + `( red / \ blue )`
-    2. Green has only one choice, to reduce `( / green \ blue )` -> `blue`, leaving `red` + `green` + `( red / \ blue )`.
-    3. Blue similarly has only one choice, `( red / \ blue )` -> `red`, leaving `red` + `green` + `blue`.
+    2. Green has only one choice, to reduce `( / green \ blue )` -> `green`, leaving `red` + `green` + `( red / \ blue )`.
+    3. Blue similarly has only one choice, `( red / \ blue )` -> `blue`, leaving `red` + `green` + `blue`.
 2. Outcome #2
     1. But, if Red reduces `( red / \ blue )` -> `red`, we have `( red / green \ )` + `( / green \ blue )` + `red`.
     2. Green can either reduce `( red / green \ )` -> `green` or `( / green \ blue )` -> `green`. 

@@ -20,6 +20,16 @@
   [colour :- Colour]
   (remove #(= % colour) colours))
 
+(s/def prev-colour
+  {:red :blue
+   :green :red
+   :blue :green})
+
+(s/def next-colour
+  {:red :green
+   :green :blue
+   :blue :red})
+
 (s/def zero
   [#{}
    #{}

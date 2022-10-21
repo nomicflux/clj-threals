@@ -122,6 +122,25 @@
          (empty? (filter (fn [y_] (gt_c c2 x y_)) (getc y colour)))
          )))
 
+(s/defn gt_g :- s/Bool
+  [colour :- threals/Colour
+   x :- threals/Threal
+   y :- threals/Threal]
+  (let [c1 (threals/next-colour colour)
+        c2 (threals/prev-colour colour)]
+    (and (empty? (filter (fn [x_] (gt_a c2 x_ y)) (getc x c1)))
+         (empty? (filter (fn [x_] (gt_a colour y x_)) (getc x c2)))
+         (empty? (filter (fn [y_] (gt_a c1 x y_)) (getc y colour))))))
+
+(s/defn gt_h :- s/Bool
+  [colour :- threals/Colour
+   x :- threals/Threal
+   y :- threals/Threal]
+  (let [c1 (threals/next-colour colour)
+        c2 (threals/prev-colour colour)]
+    (and (empty? (filter (fn [x_] (gt_a c1 x_ y)) (getc y colour)))
+         (empty? (filter (fn [y_] (gt_a colour y_ x)) (getc y colour))))))
+
 (s/defn full-eq? :- s/Bool
   [gt_fn
    x :- threals/Threal
